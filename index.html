@@ -3,6 +3,25 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
+ 
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+<meta name="description" content="Frontend Engineer specializing in React, GSAP, and Motion UI. Building fast, crafted, and accessible web experiences.">
+<link rel="canonical" href="https://sungkewl.github.io/profile/">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="SungHyun Hwang | Frontend Engineer">
+<meta property="og:title" content="SungHyun Hwang — Frontend Engineer">
+<meta property="og:description" content="React·GSAP 기반 모션 중심 인터페이스, 성능 최적화, 접근성에 강한 프론트엔드 엔지니어. 대표 작업과 프로세스를 확인하세요.">
+<meta property="og:url" content="https://sungkewl.github.io/profile/">
+<meta property="og:image" content="https://sungkewl.github.io/profile/og-image.jpg"> <!-- 썸네일 준비 권장 1200x630 -->
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="SungHyun Hwang — Frontend Engineer">
+<meta name="twitter:description" content="React·GSAP 기반 모션 중심 인터페이스, 성능 최적화, 접근성에 강한 프론트엔드 엔지니어.">
+<meta name="twitter:image" content="https://sungkewl.github.io/profile/og-image.jpg">
   <title>SungHyun Hwang | Frontend Engineer</title>
   <style>
     :root {
@@ -114,6 +133,23 @@
       border-color:rgba(96,165,250,0.6);
       box-shadow:0 12px 32px rgba(96,165,250,0.15);
     }
+
+    /* CSS 보강 */
+.nav { gap:12px; }
+.nav-toggle {
+  display:none; border:1px solid rgba(148,163,184,0.25);
+  background:rgba(15,23,42,0.65); color:#f8fafc;
+  padding:10px 14px; border-radius:12px; font-size:16px;
+}
+@media (max-width:720px){
+  .nav-toggle{ display:inline-flex; }
+  .nav-links{ display:none; width:100%; justify-content:flex-end; }
+  .nav-links.is-open{ display:flex; flex-wrap:wrap; gap:8px; }
+}
+.nav-links a:focus-visible, .btn:focus-visible {
+  outline:2px solid var(--accent); outline-offset:2px;
+  border-radius:12px;
+}
 
     .hero {
       padding:120px 0 80px;
@@ -489,14 +525,22 @@
   <div class="noise"></div>
   <header>
     <div class="container nav">
-      <div class="mono">Eric Hwang SungHyun | FRONTEND ENGINEER</div>
-      <nav class="nav-links">
+      <div class="mono">Eric SungHyun Hwang | FRONTEND ENGINEER</div>
+      
+      <button class="nav-toggle" aria-expanded="false" aria-controls="site-menu" aria-label="메뉴 열기">
+        ☰
+      </button>
+      <nav id="site-menu" class="nav-links" role="navigation" aria-label="주 메뉴">
         <a href="#projects">Case Studies</a>
         <a href="#skills">Expertise</a>
         <a href="#approach">Process</a>
         <a href="#contact">Collab</a>
       </nav>
+      
+
     </div>
+ 
+
   </header>
 
   <main>
@@ -601,7 +645,7 @@
             </p>
             <ul>
               <li>Built a custom animation rendering pipeline using GSAP ScrollTrigger.</li>
-              <li>Modularized components on a per-section basis for reusability..</li>
+              <li>Modularized components on a per-section basis for reusability.</li>
               <li>Established a collaborative development workflow through team coordination.</li>
             </ul>
             <div class="tag-row">
@@ -665,17 +709,17 @@
           <div class="card process-step">
             <span>01</span>
             <h3>Discover</h3>
-            <p>요구사항을 분석해 콘테츠 구조와 User Flow를 정의하고 기술 스택(React, GSAP, Bootstrap 등) 및 성능·확장성 기준 수립하였으며 스타일 가이드, 폰트, 컬러 시스템 등 브랜드 톤앤매너 확정하였습니다. </p>
+            <p>요구사항을 분석해 콘텐츠 구조와 User Flow를 정의하고 기술 스택(React, GSAP, Bootstrap 등) 및 성능·확장성 기준 수립하였으며 스타일 가이드, 폰트, 컬러 시스템 등 브랜드 톤앤매너 확정하였습니다. </p>
           </div>
           <div class="card process-step">
             <span>02</span>
             <h3>Prototype</h3>
-            <p>Figma / Framer로 UX 플로우 및 인터랙션 와이어프레임 제작및 GSAP ScrollTrigger나 Canvas 애니메이션의 모션 테스트하였고 프로토타입 단계에서 성능·이징·레이어 깊이 등을 미리 검증하였습니다.</p>
+            <p>Figma / Framer로 UX 플로우 및 인터랙션 와이어프레임 제작 및 GSAP ScrollTrigger나 Canvas 애니메이션의 모션 테스트하였고 프로토타입 단계에서 성능·이징·레이어 깊이 등을 미리 검증하였습니다.</p>
           </div>
           <div class="card process-step">
             <span>03</span>
             <h3>Build</h3>
-            <p>React 기반 컴포넌트 구조 / 상태관리 / 코드 스플리팅 구현, ScrollTrigger·타임라인 애니메이션을 연동해 실시간 인터랙션 완성및 GitHub를 통한 팀 협업·브랜치·머지 관리로 안정적 빌드 유지</p>
+            <p>React 기반 컴포넌트 구조 / 상태관리 / 코드 스플리팅 구현, ScrollTrigger·타임라인 애니메이션을 연동해 실시간 인터랙션 완성 및 GitHub를 통한 팀 협업·브랜치·머지 관리로 안정적 빌드 유지</p>
           </div>
           <div class="card process-step">
             <span>04</span>
@@ -801,11 +845,22 @@
   </main>
 
   <footer>
-    &copy; <span id="y"></span> Sungke Woo. Crafted with curiosity and a bias for action.
+    &copy; <span id="y"></span> Eric SungHyun Hwang. Crafted with curiosity and a bias for action.
   </footer>
 
   <script>
     document.getElementById("y").textContent = new Date().getFullYear();
+
+     
+  const toggle = document.querySelector('.nav-toggle');
+  const menu = document.getElementById('site-menu');
+  if (toggle && menu) {
+    toggle.addEventListener('click', () => {
+      const open = menu.classList.toggle('is-open');
+      toggle.setAttribute('aria-expanded', String(open));
+      toggle.setAttribute('aria-label', open ? '메뉴 닫기' : '메뉴 열기');
+    });
+  }
   </script>
 </body>
 </html>
