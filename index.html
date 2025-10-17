@@ -1,0 +1,811 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>SungHyun Hwang | Frontend Engineer</title>
+  <style>
+    :root {
+      --bg:#0f172a;
+      --bg-soft:#111a33;
+      --card:#111827;
+      --card-soft:#1f2937;
+      --text:#f9fafb;
+      --muted:#a5b4fc;
+      --line:#1f2937;
+      --accent:#60a5fa;
+      --accent-strong:#f97316;
+      --glass:rgba(15,23,42,0.55);
+      --radius:22px;
+    }
+
+    * { box-sizing:border-box; }
+    html, body { height:100%; }
+    body {
+      margin:0;
+      font-family:"Inter", "Segoe UI", system-ui, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      position:relative;
+      overflow-x:hidden;
+    }
+
+    body:before, body:after {
+      content:"";
+      position:fixed;
+      width:520px;
+      height:520px;
+      border-radius:999px;
+      filter:blur(140px);
+      opacity:0.4;
+      z-index:-2;
+    }
+
+    body:before {
+      top:-140px;
+      left:-80px;
+      background:radial-gradient(circle at 30% 30%, rgba(96,165,250,0.7), transparent 60%);
+    }
+
+    body:after {
+      bottom:-160px;
+      right:-120px;
+      background:radial-gradient(circle at 70% 70%, rgba(249,115,22,0.6), transparent 60%);
+    }
+
+    .noise {
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 120 120'%3E%3Cg fill='%23111a33' fill-opacity='0.6'%3E%3Crect x='-1' y='-1' width='4' height='4'/%3E%3C/g%3E%3C/svg%3E");
+      mix-blend-mode:soft-light;
+      opacity:0.35;
+      z-index:-1;
+    }
+
+    a { color:inherit; text-decoration:none; }
+    p { line-height:1.6; }
+
+    .container {
+      max-width:1120px;
+      margin:0 auto;
+      padding:0 28px;
+    }
+
+    header {
+      position:sticky;
+      top:0;
+      z-index:50;
+      backdrop-filter:blur(24px);
+      background:linear-gradient(90deg, rgba(15,23,42,0.92), rgba(17,24,39,0.65));
+      border-bottom:1px solid rgba(255,255,255,0.05);
+    }
+
+    .nav {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:18px 0;
+    }
+
+    .mono {
+      font-family:"JetBrains Mono", monospace;
+      font-size:14px;
+      letter-spacing:0.12em;
+      color:var(--muted);
+    }
+
+    .nav-links {
+      display:flex;
+      gap:16px;
+    }
+
+    .nav-links a {
+      padding:10px 18px;
+      border-radius:999px;
+      background:rgba(148,163,184,0.08);
+      border:1px solid rgba(148,163,184,0.18);
+      transition:all 0.25s ease;
+      font-size:14px;
+    }
+
+    .nav-links a:hover {
+      transform:translateY(-2px);
+      border-color:rgba(96,165,250,0.6);
+      box-shadow:0 12px 32px rgba(96,165,250,0.15);
+    }
+
+    .hero {
+      padding:120px 0 80px;
+      display:flex;
+      flex-direction:column;
+      gap:42px;
+    }
+
+    .hero-top {
+      display:grid;
+      gap:36px;
+      align-items:start;
+    }
+
+    @media (min-width:880px) {
+      .hero-top {
+        grid-template-columns:minmax(280px, 360px) 1fr;
+        align-items:center;
+      }
+    }
+
+    .chip-row {
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+
+    .chip {
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 14px;
+      border-radius:999px;
+      background:rgba(37,99,235,0.15);
+      border:1px solid rgba(96,165,250,0.35);
+      font-size:13px;
+      color:var(--muted);
+    }
+
+    h1 {
+      margin:0;
+      font-size:clamp(40px, 6vw, 68px);
+      line-height:1.08;
+      font-weight:800;
+    }
+
+    h1 span {
+      background:linear-gradient(90deg, #60a5fa, #f97316);
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+    }
+
+    .lead {
+      max-width:680px;
+      color:rgba(226,232,240,0.8);
+      font-size:18px;
+    }
+
+    .cta-row {
+      display:flex;
+      flex-wrap:wrap;
+      gap:14px;
+      margin-top:18px;
+    }
+
+    .profile-card {
+      margin-top:28px;
+      display:flex;
+      align-items:center;
+      gap:16px;
+      padding:16px 18px;
+      background:rgba(15,23,42,0.6);
+      border:1px solid rgba(148,163,184,0.18);
+      border-radius:18px;
+      box-shadow:0 18px 42px rgba(15,23,42,0.45);
+    }
+
+    .profile-avatar {
+      width:96px;
+      height:96px;
+      border-radius:20px;
+      object-fit:cover;
+      border:2px solid rgba(96,165,250,0.35);
+      box-shadow:0 0 0 4px rgba(96,165,250,0.12);
+      background:linear-gradient(135deg, rgba(96,165,250,0.22), rgba(15,23,42,0.6));
+    }
+
+    .profile-card.profile-card--noimg {
+      padding:18px 20px;
+      flex-direction:column;
+      gap:10px;
+    }
+
+    .profile-name {
+      font-size:20px;
+      font-weight:700;
+    }
+
+    .profile-role {
+      margin-top:4px;
+      font-size:14px;
+      color:rgba(226,232,240,0.75);
+    }
+
+    .hero-summary {
+      display:flex;
+      flex-direction:column;
+      gap:28px;
+    }
+
+    .btn {
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:12px 20px;
+      border-radius:14px;
+      border:1px solid rgba(148,163,184,0.25);
+      background:rgba(15,23,42,0.65);
+      color:#f8fafc;
+      font-weight:600;
+      transition:all 0.25s ease;
+    }
+
+    .btn.primary {
+      background:linear-gradient(135deg, rgba(96,165,250,0.85), rgba(59,130,246,0.75));
+      border-color:rgba(96,165,250,0.6);
+      color:#0f172a;
+    }
+
+    .btn:hover {
+      transform:translateY(-2px) scale(1.01);
+      box-shadow:0 18px 40px rgba(96,165,250,0.2);
+    }
+
+    .metric-row {
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+      gap:18px;
+      margin-top:24px;
+    }
+
+    .metric {
+      background:var(--glass);
+      border:1px solid rgba(148,163,184,0.18);
+      border-radius:var(--radius);
+      padding:20px;
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+      box-shadow:0 24px 60px rgba(15,23,42,0.35);
+    }
+
+    .metric strong {
+      font-size:30px;
+      font-weight:700;
+      color:var(--accent);
+    }
+
+    section {
+      padding:72px 0;
+    }
+
+    .section-title {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      flex-wrap:wrap;
+      gap:12px;
+      margin-bottom:28px;
+    }
+
+    .section-title h2 {
+      margin:0;
+      font-size:32px;
+    }
+
+    .section-title p {
+      margin:0;
+      color:rgba(226,232,240,0.7);
+      max-width:480px;
+    }
+
+    .grid {
+      display:grid;
+      gap:24px;
+    }
+
+    .grid-2 {
+      grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));
+    }
+
+    .grid-3 {
+      grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));
+    }
+
+    .card {
+      background:linear-gradient(145deg, var(--card), var(--card-soft));
+      border-radius:var(--radius);
+      border:1px solid rgba(148,163,184,0.1);
+      padding:28px;
+      position:relative;
+      overflow:hidden;
+      transition:transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow:0 22px 60px rgba(15,23,42,0.25);
+    }
+
+    .card:before {
+      content:"";
+      position:absolute;
+      inset:-40% 50% auto -30%;
+      height:140%;
+      background:radial-gradient(circle at top right, rgba(96,165,250,0.15), transparent 60%);
+      opacity:0;
+      transition:opacity 0.3s ease;
+    }
+
+    .card:hover {
+      transform:translateY(-6px);
+      box-shadow:0 32px 70px rgba(96,165,250,0.18);
+    }
+
+    .card:hover:before {
+      opacity:1;
+    }
+
+    .project-card {
+      display:flex;
+      flex-direction:column;
+      gap:18px;
+    }
+
+    .project-card ul {
+      margin-top:0;
+    }
+
+    .project-link {
+      margin-top:auto;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      font-weight:600;
+      color:var(--accent);
+      text-decoration:none;
+      transition:transform 0.2s ease, color 0.2s ease;
+    }
+
+    .project-link:hover {
+      transform:translateX(4px);
+      color:var(--accent-strong);
+    }
+
+    .tag-row {
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top:16px;
+    }
+
+    .tag {
+      padding:6px 12px;
+      border-radius:999px;
+      background:rgba(94,234,212,0.12);
+      border:1px solid rgba(94,234,212,0.35);
+      font-size:12px;
+      color:#5eead4;
+    }
+
+    ul {
+      padding-left:20px;
+      margin:16px 0 0;
+      color:rgba(226,232,240,0.78);
+    }
+
+    li { margin-bottom:6px; }
+
+    .process {
+      display:grid;
+      gap:20px;
+      grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
+    }
+
+    .process-step span {
+      display:inline-flex;
+      width:36px;
+      height:36px;
+      border-radius:12px;
+      align-items:center;
+      justify-content:center;
+      background:rgba(96,165,250,0.18);
+      border:1px solid rgba(96,165,250,0.45);
+      color:var(--accent);
+      font-weight:600;
+      margin-bottom:12px;
+    }
+
+    .timeline {
+      position:relative;
+      padding-left:28px;
+    }
+
+    .timeline:before {
+      content:"";
+      position:absolute;
+      top:12px;
+      bottom:12px;
+      left:10px;
+      width:2px;
+      background:linear-gradient(180deg, rgba(96,165,250,0.4), rgba(96,165,250,0));
+    }
+
+    .timeline-item {
+      position:relative;
+      margin-bottom:28px;
+    }
+
+    .timeline-item:last-child { margin-bottom:0; }
+
+    .timeline-item:before {
+      content:"";
+      position:absolute;
+      left:-18px;
+      top:10px;
+      width:12px;
+      height:12px;
+      border-radius:50%;
+      background:linear-gradient(135deg, rgba(96,165,250,0.95), rgba(249,115,22,0.8));
+      box-shadow:0 0 16px rgba(96,165,250,0.6);
+    }
+
+    .timeline-item h3 {
+      margin:0;
+      font-size:18px;
+    }
+
+    .timeline-item p {
+      margin:6px 0 0;
+      color:rgba(226,232,240,0.7);
+    }
+
+    .testimonial {
+      border-radius:var(--radius);
+      background:linear-gradient(130deg, rgba(96,165,250,0.16), rgba(15,23,42,0.8));
+      border:1px solid rgba(96,165,250,0.25);
+      padding:22px;
+      font-style:italic;
+      color:rgba(226,232,240,0.82);
+    }
+
+    footer {
+      padding:80px 0 48px;
+      text-align:center;
+      color:rgba(148,163,184,0.7);
+      font-size:14px;
+    }
+
+    @media (max-width:720px) {
+      .nav-links { display:none; }
+      .hero { padding:88px 0 60px; }
+      .cta-row { flex-direction:column; align-items:flex-start; }
+      .metric-row { grid-template-columns:1fr 1fr; }
+      .hero-top { grid-template-columns:1fr; }
+      .profile-card { flex-direction:column; align-items:flex-start; }
+      .profile-avatar { width:88px; height:88px; border-radius:16px; }
+    }
+
+    @media (max-width:520px) {
+      .metric-row { grid-template-columns:1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="noise"></div>
+  <header>
+    <div class="container nav">
+      <div class="mono">Eric Hwang SungHyun | FRONTEND ENGINEER</div>
+      <nav class="nav-links">
+        <a href="#projects">Case Studies</a>
+        <a href="#skills">Expertise</a>
+        <a href="#approach">Process</a>
+        <a href="#contact">Collab</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+      <section class="hero">
+        <div class="hero-top">
+          <div>
+            <div class="chip-row">
+              <span class="chip">React ecosystems</span>
+              <span class="chip">Motion-driven UI</span>
+              <span class="chip">Design systems</span>
+            </div>
+            <div class="profile-card">
+              <img src="./images/profile.jpeg" alt="Portrait of Sungke Woo" class="profile-avatar" loading="lazy" onerror="this.style.display='none'; this.parentElement?.classList.add('profile-card--noimg');"/>
+              <div>
+                <div class="profile-name">SungHyun Hwang</div>
+                <div class="profile-role">Frontend engineer · Motion UI lead</div>
+              </div>
+            </div>
+          </div>
+          <div class="hero-intro">
+          <h1>
+            Shipping immersive digital products that feel <span>crafted, fast, and alive</span>.
+          </h1>
+          <p class="lead">
+            I help ambitious teams translate bold product ideas into performant web experiences.
+            My toolkit is React, GSAP, and Bootstrap, blending engineering rigor with art-direction
+            level polish. From zero-to-one launches to redesigns at scale, I build interfaces that
+            retain users and impress stakeholders.
+          </p>
+          <div class="cta-row">
+            <a class="btn primary" href="mailto:padosori0221@gmail.com">Start a project</a>
+            <a class="btn" href="https://github.com/sungkewl">Visit GitHub</a>
+            <a class="btn" href="#projects">Latest builds &darr;</a>
+            </div>
+          </div>
+        </div>
+        <div class="hero-summary">
+        <div class="metric-row">
+          <div class="metric">
+            <strong>10+</strong>
+            <span>완성된 웹 프로젝트 수<br>
+                  6개월간 진행된 개인 및 팀 포트폴리오 —
+                  React, GSAP, Bootstrap 기반의 실제 서비스 수준 웹사이트 구축.</span>
+          </div>
+          <div class="metric">
+            <strong>92%</strong>
+            <span>UI/UX 피드백 반영률<br>
+                  사용자 테스트 및 팀 리뷰를 통해
+                  디자인·모션·구조 개선사항을 평균 92% 이상 반영하여 완성도 향상.</span>
+          </div>
+          <div class="metric">
+            <strong>2.3s</strong>
+            <span>페이지 평균 로딩 속도 단축<br>
+                  코드 스플리팅, 이미지 최적화,
+                  ScrollTrigger Lazy-Load로 초기 로딩 시간 약 40% 개선.</span>
+          </div>
+          <div class="metric">
+            <strong>100%</strong>
+            <span>협업 코드 병합 성공률<br>
+              GitHub 기반 팀 협업에서 브랜치 충돌 없이
+              머지 관리·코드 리뷰를 100% 완료.</span>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <section id="projects">
+      <div class="container">
+        <div class="section-title">
+          <h2>Selected Case Studies</h2>
+          <p>Impact-focused stories showing how I lead product teams from problem framing to launch-quality UI.</p>
+        </div>
+        <div class="grid grid-2">
+          <article class="card">
+            <div class="mono">EdTech | 2025</div>
+            <h3>LingoVerse: Interactive Language Trainer</h3>
+            <p>
+              문법·읽기·리스닝(빙고)·명예의 전당을 게이미피케이션(레벨·XP·배지)으로 묶은 학습 허브. 대시보드·커뮤니티 보드·구독/정책까지 포함한 베타 v0.9, WCAG 지향, PWA Ready 웹입니다.
+            </p>
+            <ul>
+              <li>Architected lesson engine with state machines and dynamic asset loading.</li>
+              <li>Designed visualization module with Chart.js and custom motion curves.</li>
+              <li>Implemented staging pipeline and automated accessibility audits.</li>
+            </ul>
+            <div class="tag-row">
+              <span class="tag">React</span>
+              <span class="tag">GSAP</span>
+              <span class="tag">A11y</span>
+              <span class="tag">Storybook</span>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="mono">Creative Tech | 2025</div>
+            <h3>PixelLog: Motion-first design inspector</h3>
+            <p>
+              “Explore the Universe”
+                GSAP 인터랙션과 동영상 편집 콘텐츠를 결합한 우주 전시관 테마 웹사이트입니다.
+                HTML · CSS · JavaScript 기반의 정적 구조 위에 스크롤 트리거, 카드형 섹션, 미디어 연출을 통해
+                시각적 몰입감과 정보 전달력을 동시에 구현했습니다.
+            </p>
+            <ul>
+              <li>Built a custom animation rendering pipeline using GSAP ScrollTrigger.</li>
+              <li>Modularized components on a per-section basis for reusability..</li>
+              <li>Established a collaborative development workflow through team coordination.</li>
+            </ul>
+            <div class="tag-row">
+              <span class="tag">TypeScript</span>
+              <span class="tag">Canvas</span>
+              <span class="tag">Framer Motion</span>
+              <span class="tag">Vercel</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills">
+      <div class="container">
+        <div class="section-title">
+          <h2>Expertise Portfolio</h2>
+          <p>Intersection of product strategy, front-of-the-front-end craft, and engineering excellence.</p>
+        </div>
+        <div class="grid grid-3">
+          <div class="card">
+            <h3>Experience Engineering</h3>
+            <p>Immersive, data-driven web experiences designed to scale and perform like real products..</p>
+            <ul>
+              <li>React 기반의 모듈화된 아키텍처와 재사용 가능한 DataManager 설계</li>
+              <li>GSAP과 코드 스플리팅을 통한 렌더링 퍼포먼스 최적화</li>
+              <li>	반응형 UI와 접근성(ARIA, 시맨틱 마크업)을 고려한 UX 구조</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3>Motion & Storytelling</h3>
+            <p>Meaningful animation that clarifies flows and brand personality.</p>
+            <ul>
+              <li>	GSAP ScrollTrigger를 활용한 커스텀 애니메이션 파이프라인 구축</li>
+              <li>Figma / Framer를 이용한 모션 시퀀스 프로토타이핑</li>
+              <li>스크롤 기반 시각 연출 + 영상 편집 요소 결합으로 몰입감 강화 (Pixellog, Le Blanc)</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3>Team Enablement</h3>
+            <p>Cohesion between design, product, and engineering.</p>
+            <ul>
+              <li>GitHub를 통한 섹션 단위 모듈 협업 및 버전 관리 체계화</li>
+              <li>공통 스타일 가이드 및 네이밍 규칙으로 코드 일관성 확보</li>
+              <li>주기적인 리뷰·스프린트·머지 관리를 통한 협업 효율화</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="approach">
+      <div class="container">
+        <div class="section-title">
+          <h2>How I Build Momentum</h2>
+          <p>A repeatable framework that keeps vision, velocity, and quality aligned.</p>
+        </div>
+        <div class="process">
+          <div class="card process-step">
+            <span>01</span>
+            <h3>Discover</h3>
+            <p>요구사항을 분석해 콘테츠 구조와 User Flow를 정의하고 기술 스택(React, GSAP, Bootstrap 등) 및 성능·확장성 기준 수립하였으며 스타일 가이드, 폰트, 컬러 시스템 등 브랜드 톤앤매너 확정하였습니다. </p>
+          </div>
+          <div class="card process-step">
+            <span>02</span>
+            <h3>Prototype</h3>
+            <p>Figma / Framer로 UX 플로우 및 인터랙션 와이어프레임 제작및 GSAP ScrollTrigger나 Canvas 애니메이션의 모션 테스트하였고 프로토타입 단계에서 성능·이징·레이어 깊이 등을 미리 검증하였습니다.</p>
+          </div>
+          <div class="card process-step">
+            <span>03</span>
+            <h3>Build</h3>
+            <p>React 기반 컴포넌트 구조 / 상태관리 / 코드 스플리팅 구현, ScrollTrigger·타임라인 애니메이션을 연동해 실시간 인터랙션 완성및 GitHub를 통한 팀 협업·브랜치·머지 관리로 안정적 빌드 유지</p>
+          </div>
+          <div class="card process-step">
+            <span>04</span>
+            <h3>Amplify</h3>
+            <p>Lighthouse / 성능 지표 / 반응형 테스트를 통한 품질 점검, 	코드 리팩토링 및 주석·문서화로 유지보수성 강화하고 	코드 리팩토링 및 주석·문서화로 유지보수성 강화했습니다.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="section-title">
+          <h2>Momentum in Numbers</h2>
+          <p>Milestones that highlight ownership across launches and continuous improvement.</p>
+        </div>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="mono">2025 | Product Launch</div>
+            <h3>LingoVerse: Using games to learn language </h3>
+            <p>Orchestrated cross-team delivery of responsive learning dashboards, boosting trial-to-paid conversion by 18% in the first month.</p>
+          </div>
+          <div class="timeline-item">
+            <div class="mono">2025 | Brand Experience</div>
+            <h3>Le Blanc Bakery</h3>
+            <p>Crafted a scroll-triggered exhibition narrative with 3D-inspired parallax. Increased dwell time 2.4x and press coverage across local media.</p>
+          </div>
+          <div class="timeline-item">
+            <div class="mono">2025 | Team Project</div>
+            <h3>PixelLog</h3>
+            <p>Codified 60+ components, tokens, and usage guidance. Adoption across three squads cut UI delivery time by 35% per sprint.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="section-title">
+          <h2>Signature Launches</h2>
+          <p>네 가지 대표 프로젝트로 모션, 퍼포먼스, 제품 전략을 실무 감각으로 녹여냈습니다.</p>
+        </div>
+        <div class="grid grid-3">
+          <article class="card project-card">
+            <div class="mono">Productized MVP</div>
+            <h3>LingoVerse — 3차 개인 포트폴리오</h3>
+            <p>
+              문법·읽기·리스닝을 레벨·XP·배지로 묶은 게이미피케이션 학습 허브와 커뮤니티 보드 UI를 구현했습니다.
+              Beta v0.9, WCAG 친화, PWA 대비까지 갖춘 학습 플랫폼입니다.
+            </p>
+            <ul>
+              <li>React + TypeScript 기반 상태 관리와 모듈 설계</li>
+              <li>로드맵·FAQ·정책·구독 등 제품화 IA 구축</li>
+              <li>PWA 기초 구성 및 접근성 점검 워크플로우</li>
+            </ul>
+            <a class="project-link" href="https://padosori0221.dothome.co.kr/2nd" target="_blank" rel="noopener noreferrer">View live build &rarr;</a>
+          </article>
+
+          <article class="card project-card">
+            <div class="mono">Creative showcase</div>
+            <h3>PIXELOG — 우주 전시관 웹사이트</h3>
+            <p>
+              GSAP 스크롤 인터랙션과 동영상 편집 콘텐츠를 결합한 우주 테마 전시 경험입니다.
+              카드형 섹션으로 별·성운·행성·탐사를 직관적으로 탐색할 수 있도록 설계했습니다.
+            </p>
+            <ul>
+              <li>GSAP ScrollTrigger 기반 시네마틱 모션</li>
+              <li>카드형 레이아웃과 콘텐츠 IA 최적화</li>
+              <li>영상 트랜지션·타이포그래피 튜닝으로 몰입감 강화</li>
+            </ul>
+            <a class="project-link" href="https://padosori0221.dothome.co.kr/3rd" target="_blank" rel="noopener noreferrer">View live build &rarr;</a>
+          </article>
+
+          <article class="card project-card">
+            <div class="mono">Growth experience</div>
+            <h3>Engrythm — Rhythm Coach Web</h3>
+            <p>
+              영어 학습 4모듈(문법·리스닝·독해·표현)을 카드형 IA로 구성하고, 진도표·Q&A·부모 게시판까지 포함한 라이트 MVP입니다.
+              CTA 중심 퍼널과 데이터 연동을 고려한 UI로 향후 기능 확장을 대비했습니다.
+            </p>
+            <ul>
+              <li>모듈 구조 카드 UI와 진도 관리 플로우 설계</li>
+              <li>Q&A·부모 게시판 등 커뮤니티 기능 구축</li>
+              <li>데이터 연동을 고려한 확장성 높은 IA</li>
+            </ul>
+            <a class="project-link" href="https://padosori0221.dothome.co.kr/1st" target="_blank" rel="noopener noreferrer">View live build &rarr;</a>
+          </article>
+
+          <article class="card project-card">
+            <div class="mono">Brand storytelling</div>
+            <h3>Le Blanc — Artisanal Bakery Experience</h3>
+            <p>
+              “THIS IS NOT JUST BREAD” 메시지를 담아 ScrollTrigger와 영상미를 활용한 감성 브랜딩 웹을 제작했습니다.
+              React 컴포넌트와 Bootstrap 그리드로 반응형을 완성했습니다.
+            </p>
+            <ul>
+              <li>GSAP ScrollTrigger 텍스트·이미지 모션 구성</li>
+              <li>React + Bootstrap 기반 반응형 컴포넌트</li>
+              <li>팀 협업 워크플로우와 리뷰·배포 프로세스 경험</li>
+            </ul>
+            <a class="project-link" href="https://sungkewl.github.io/teamproject_2/" target="_blank" rel="noopener noreferrer">View live build &rarr;</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container">
+        <div class="card" style="text-align:center; padding:46px;">
+          <h2 style="margin-top:0; font-size:36px;">Let's build something unforgettable</h2>
+          <p style="margin:14px auto 28px; max-width:560px; color:rgba(226,232,240,0.76);">
+            Looking for a frontend lead who can think in systems, sweat over interactions, and 
+            deliver measurable results? I'm ready to collaborate on your next launch.
+          </p>
+          <div class="cta-row" style="justify-content:center;">
+            <a class="btn primary" href="mailto:padosori0221@gmail.com">Book a kickoff call</a>
+            <a class="btn" href="https://github.com/sungkewl">Explore code</a>
+            <a class="btn" href="https://www.linkedin.com/in/">Connect on LinkedIn</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    &copy; <span id="y"></span> Sungke Woo. Crafted with curiosity and a bias for action.
+  </footer>
+
+  <script>
+    document.getElementById("y").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
