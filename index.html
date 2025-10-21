@@ -6,7 +6,7 @@
  
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400;600&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
 
 <meta name="description" content="Frontend Engineer specializing in React, GSAP, and Motion UI. Building fast, crafted, and accessible web experiences.">
 <link rel="canonical" href="https://sungkewl.github.io/profile/">
@@ -42,11 +42,12 @@
     html, body { height:100%; }
     body {
       margin:0;
-      font-family:"Inter", "Segoe UI", system-ui, sans-serif;
+      font-family:"Inter", "Noto Sans KR", "Segoe UI", system-ui, sans-serif;
       background:var(--bg);
       color:var(--text);
       position:relative;
       overflow-x:hidden;
+      word-break:keep-all;
     }
 
     body:before, body:after {
@@ -83,7 +84,10 @@
     }
 
     a { color:inherit; text-decoration:none; }
-    p { line-height:1.6; }
+    p {
+      line-height:1.7;
+      letter-spacing:-0.01em;
+    }
 
     .container {
       max-width:1120px;
@@ -204,9 +208,15 @@
     }
 
     .lead {
+      margin:0;
       max-width:680px;
-      color:rgba(226,232,240,0.8);
+      color:rgba(226,232,240,0.82);
       font-size:18px;
+      line-height:1.72;
+    }
+
+    .lead + .lead {
+      margin-top:14px;
     }
 
     .cta-row {
@@ -566,11 +576,20 @@
           <h1>
             Shipping immersive digital products that feel <span>crafted, fast, and alive</span>.
           </h1>
-          <p class="lead">
-            I help ambitious teams translate bold product ideas into performant web experiences.
-            My toolkit is React, GSAP, and Bootstrap, blending engineering rigor with art-direction
-            level polish. From zero-to-one launches to redesigns at scale, I build interfaces that
-            retain users and impress stakeholders.
+          <p class="lead" lang="ko">
+            안녕하세요. 저는 웹 퍼블리싱과 프론트엔드 개발을 통해 아이디어를 시각적으로 구현하는
+            <strong>황성현(SungHyun Hwang)</strong>입니다.
+          </p>
+          <p class="lead" lang="ko">
+            국비 교육 과정을 통해 최신 웹 기술과 실무 중심의 프로젝트 경험을 쌓았으며 GSAP, ScrollTrigger, React, 모듈형
+            자바스크립트 구조, 반응형 디자인을 활용해 사용자 경험(UX)을 중심으로 한 웹사이트를 직접 설계하고 제작해왔습니다.
+          </p>
+          <p class="lead" lang="ko">
+            “LingoVerse”에서는 게임형 영어학습 플랫폼을, “Le Blanc”에서는 감각적인 브랜드 웹사이트를 구현하며 디자인과
+            개발이 만나는 지점에서 새로운 가능성을 탐구하고 있습니다.
+          </p>
+          <p class="lead" lang="ko">
+            지금도 계속 배우고, 만들고, 개선하고 있습니다. 연령이 아니라, 결과로 말하는 웹 크리에이터가 되고자 합니다.
           </p>
           <div class="cta-row">
             <a class="btn primary" href="mailto:padosori0221@gmail.com">Start a project</a>
@@ -673,7 +692,7 @@
             <ul>
               <li>React 기반의 모듈화된 아키텍처와 재사용 가능한 DataManager 설계</li>
               <li>GSAP과 코드 스플리팅을 통한 렌더링 퍼포먼스 최적화</li>
-              <li>	반응형 UI와 접근성(ARIA, 시맨틱 마크업)을 고려한 UX 구조</li>
+              <li>반응형 UI와 접근성(ARIA, 시맨틱 마크업)을 고려한 UX 구조</li>
             </ul>
           </div>
 
@@ -681,7 +700,7 @@
             <h3>Motion & Storytelling</h3>
             <p>Meaningful animation that clarifies flows and brand personality.</p>
             <ul>
-              <li>	GSAP ScrollTrigger를 활용한 커스텀 애니메이션 파이프라인 구축</li>
+              <li>GSAP ScrollTrigger를 활용한 커스텀 애니메이션 파이프라인 구축</li>
               <li>Figma / Framer를 이용한 모션 시퀀스 프로토타이핑</li>
               <li>스크롤 기반 시각 연출 + 영상 편집 요소 결합으로 몰입감 강화 (Pixellog, Le Blanc)</li>
             </ul>
@@ -725,7 +744,7 @@
           <div class="card process-step">
             <span>04</span>
             <h3>Amplify</h3>
-            <p>Lighthouse / 성능 지표 / 반응형 테스트를 통한 품질 점검, 	코드 리팩토링 및 주석·문서화로 유지보수성 강화하고 	코드 리팩토링 및 주석·문서화로 유지보수성 강화했습니다.</p>
+            <p>Lighthouse / 성능 지표 / 반응형 테스트를 통한 품질 점검과 코드 리팩토링 및 주석·문서화로 유지보수성을 강화했습니다.</p>
           </div>
         </div>
       </div>
@@ -741,17 +760,18 @@
           <div class="timeline-item">
             <div class="mono">2025 | Product Launch</div>
             <h3>LingoVerse: Using games to learn language </h3>
-            <p>Orchestrated cross-team delivery of responsive learning dashboards, boosting trial-to-paid conversion by 18% in the first month.</p>
+            <p>기술과 구조로 완성하는 실무형 웹 — React, GSAP, Bootstrap 기반의 인터랙티브 프론트엔드 개발</p>
           </div>
           <div class="timeline-item">
             <div class="mono">2025 | Brand Experience</div>
             <h3>Le Blanc Bakery</h3>
-            <p>Crafted a scroll-triggered exhibition narrative with 3D-inspired parallax. Increased dwell time 2.4x and press coverage across local media.</p>
+            <p>GSAP ScrollTrigger를 중심으로 시각적 몰입감을 극대화하고,
+                React + Bootstrap 기반의 반응형 구조와 팀 협업 시스템을 적용했습니다.</p>
           </div>
           <div class="timeline-item">
             <div class="mono">2025 | Team Project</div>
             <h3>PixelLog</h3>
-            <p>Codified 60+ components, tokens, and usage guidance. Adoption across three squads cut UI delivery time by 35% per sprint.</p>
+            <p>우주 주제를 데이터 중심으로 구조화하고, 섹션별 인터랙션과 리서치 기반 콘텐츠를 결합한 팀 포트폴리오형 전시 웹사이트입니다. 홈에서 주제 네비게이션 → 상세 페이지(성운/별, 행성, 은하, 탐사)로 흐름을 설계했습니다.</p>
           </div>
         </div>
       </div>
